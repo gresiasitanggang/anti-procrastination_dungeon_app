@@ -1,0 +1,6 @@
+{
+  "name": "Anti-Procrastination Dungeon",
+  "description": "A gamified productivity app that turns tasks into cute fantasy monsters to defeat before their deadlines.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
