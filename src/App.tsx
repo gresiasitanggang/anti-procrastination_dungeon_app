@@ -548,45 +548,77 @@ export default function App() {
 
       {/* Failure Rain & Tear Drop VFX */}
       {timeState === 'FAILURE' && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 opacity-30">
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-xl select-none"
-              initial={{ y: -50, x: `${Math.random() * 100}%` }}
-              animate={{ y: '110vh' }}
-              transition={{
-                duration: 6 + Math.random() * 4,
-                repeat: Infinity,
-                ease: 'linear',
-                delay: Math.random() * 5
-              }}
-            >
-              {i % 3 === 0 ? '💧' : i % 3 === 1 ? '😢' : '🍂'}
-            </motion.div>
-          ))}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 select-none">
+          {[...Array(12)].map((_, i) => {
+            const emojis = ['😢', '💧', '🍂', '😔', '💔'];
+            const emoji = emojis[i % emojis.length];
+            const xPos = `${(i * 100) / 12 + Math.random() * 4}%`;
+            const duration = 5 + Math.random() * 3.5;
+            const delay = Math.random() * 3.5;
+            return (
+              <motion.div
+                key={i}
+                className="absolute text-[35vh] md:text-[45vh] select-none leading-none pointer-events-none"
+                initial={{
+                  x: xPos,
+                  y: '-55vh',
+                  rotate: Math.random() * 360,
+                }}
+                animate={{
+                  y: '125vh',
+                  rotate: Math.random() * 360 + 120,
+                }}
+                transition={{
+                  duration: duration,
+                  delay: delay,
+                  repeat: Infinity,
+                  ease: 'linear'
+                }}
+                style={{
+                  opacity: 0.25,
+                }}
+              >
+                {emoji}
+              </motion.div>
+            );
+          })}
         </div>
       )}
 
       {/* Critical Floating Ash Ember VFX */}
       {timeState === 'CRITICAL' && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 opacity-40">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-sm select-none"
-              initial={{ y: '110vh', x: `${Math.random() * 100}%` }}
-              animate={{ y: -50, x: `${Math.random() * 100}%` }}
-              transition={{
-                duration: 5 + Math.random() * 4,
-                repeat: Infinity,
-                ease: 'linear',
-                delay: Math.random() * 3
-              }}
-            >
-              🔥
-            </motion.div>
-          ))}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10 select-none">
+          {[...Array(12)].map((_, i) => {
+            const xPos = `${(i * 100) / 12 + Math.random() * 4}%`;
+            const duration = 5 + Math.random() * 4;
+            const delay = Math.random() * 3;
+            return (
+              <motion.div
+                key={i}
+                className="absolute text-[35vh] md:text-[45vh] select-none leading-none pointer-events-none"
+                initial={{
+                  x: xPos,
+                  y: '125vh',
+                  rotate: Math.random() * 360,
+                }}
+                animate={{
+                  y: '-55vh',
+                  rotate: Math.random() * 360 + 120,
+                }}
+                transition={{
+                  duration: duration,
+                  delay: delay,
+                  repeat: Infinity,
+                  ease: 'linear'
+                }}
+                style={{
+                  opacity: 0.25,
+                }}
+              >
+                🔥
+              </motion.div>
+            );
+          })}
         </div>
       )}
 
@@ -916,7 +948,7 @@ export default function App() {
                   className="space-y-4"
                 >
                   {/* Empty state view */}
-                  {tasks.length === 0 && (
+                  {tasks.filter((t) => !t.completed).length === 0 && (
                     <div className="p-12 text-center rounded-2xl border-2 border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center gap-3">
                       <div className="text-4xl text-slate-300">🏰</div>
                       <div>
@@ -929,7 +961,7 @@ export default function App() {
                   )}
 
                   {/* Render Quest Cards */}
-                  {tasks.map((task) => {
+                  {tasks.filter((t) => !t.completed).map((task) => {
                     // Match difficulty config info
                     const matchedMonster = MONSTERS[task.difficulty] || MONSTERS[1];
                     
